@@ -14,6 +14,7 @@
 ## Table of Contents
 
 - [Overview & Architecture](#overview--architecture)
+- [Industry Benchmark & Comparison](docs/BENCHMARK_COMPARISON.md)
 - [Quick Reference: URLs & Credentials](#quick-reference-urls--credentials)
 - [Prerequisites](#prerequisites)
 - [Quick Start Guide](#quick-start-guide)
@@ -31,6 +32,8 @@
 ## Overview & Architecture
 
 **Keycloaked** is an open-source reference architecture that brings consumer-grade authentication—inspired by Uber's Unified Signup and Login (USL)—to **Keycloak 26**. It combines modern passwordless identity, biometric passkeys, dynamic multi-channel OTP routing, zero-username registration, and a unified React design system shared between your client application and Keycloak's login pages.
+
+> 📊 **In-Depth Benchmark Analysis**: Read our comprehensive [Industry Benchmark & Architectural Comparison](docs/BENCHMARK_COMPARISON.md) evaluating Keycloaked against **Uber (USL)**, **Google Identity**, **GitHub**, **Shopify (Shop Pay)**, **WhatsApp / Meta**, and **Apple ID**.
 
 ### System Architecture Diagram
 
@@ -309,8 +312,10 @@ To prevent unauthorized account takeovers if a device is left unattended, Keyclo
 
 ## Documentation & External References
 
-For in-depth understanding of the underlying frameworks and tools used in this project:
+### Project Documentation
+- **[Industry Benchmark & Architectural Comparison](docs/BENCHMARK_COMPARISON.md)**: Comprehensive evaluation, company case studies (Uber, Google, GitHub, Shopify, WhatsApp, Apple, Airbnb), gap analysis, and flow judgment.
 
+### Framework & Specification References
 - **Keycloak Official Guides**: [https://www.keycloak.org/guides](https://www.keycloak.org/guides)
 - **Keycloak Server Developer Guide (SPIs)**: [https://www.keycloak.org/docs/latest/server_development/](https://www.keycloak.org/docs/latest/server_development/)
 - **Keycloakify Documentation**: [https://docs.keycloakify.dev/](https://docs.keycloakify.dev/)
