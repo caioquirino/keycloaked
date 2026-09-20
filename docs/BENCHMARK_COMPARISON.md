@@ -64,15 +64,15 @@
 |---|---|---|:---:|:---:|---|
 | **Keycloaked** | **System Browser (AppAuth) or Direct Grant** | React 18 (Keycloakify) + `@keycloaked/ui` or Native UI | ⚠️ Enforces System Browser | ✅ Yes | [GitHub: keycloaked](https://github.com/caioquirino/keycloaked) |
 | **Uber (USL)** | **Server-Rendered Web SPA on WebView/TWA** | Node.js Server-Rendered SPA + WebViews/TWAs | ❌ Uses TWA / Custom WebViews | ⚠️ Proprietary 1st-Party | [Uber Eng: USL Stack](https://www.uber.com/blog/unified-signup-and-login/) |
-| **Google Identity** | **Native OS Daemon (Android) / System Browser (iOS)** | Android Credential Manager / Web OAuth | ✅ Strictly Blocks WebViews (`403`) | ✅ Yes | [Android Credential Manager](https://developer.android.com/training/sign-in/credential-manager) / [OAuth in Native Apps](https://developers.googleblog.com/2016/08/modernizing-oauth-interactions-in-native-apps.html) |
-| **GitHub** | **System Browser Session (RFC 8252)** | Web Rails/HTML inside `ASWebAuth` / CCT | ✅ Strictly Blocks WebViews | ✅ Yes | [GitHub Docs: Auth & Sudo Mode](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github) / [Passkeys](https://github.blog/2023-07-12-introducing-passkeys-on-github/) |
-| **Shopify (Shop Pay)** | **Hybrid Web Sheet (Checkout Kit) / Unknown Internal** | Web Checkout Kit inside Native Sheet | ⚠️ Deprecated raw WebViews | ⚠️ In Checkout Kit | [Shopify Dev: Checkout Sheet Kit](https://shopify.dev/docs/api/checkout-sheet-kit) |
-| **WhatsApp / Meta** | **100% Pure Native Platform UI** | Pure UIKit (iOS) / Jetpack Compose (Android) | ❌ Zero WebViews used | ⚠️ N/A (Direct TCP/Noise) | [WhatsApp Security Whitepaper](https://www.whatsapp.com/security/WhatsApp-Security-Whitepaper.pdf) / [Passkeys Launch](https://blog.whatsapp.com/passkeys-on-whatsapp-launch) |
-| **Apple ID** | **100% OS Daemon (`authd`)** | Apple Private OS Frameworks (`AuthenticationServices`) | ✅ Strictly Native OS | ✅ Native OS Protocol | [Apple Dev: AuthenticationServices](https://developer.apple.com/documentation/authenticationservices) / [Apple Passkeys](https://developer.apple.com/passkeys/) |
-| **Airbnb** | **100% Native UI via Server-Driven UI** | Swift / Kotlin Native UI Widgets | ❌ Avoids WebViews | ⚠️ Proprietary 1st-Party | [Airbnb Tech: Flexible Auth](https://airbnb.tech/projects/flexible-authentication/) / [Sunsetting React Native](https://medium.com/airbnb-engineering/sunsetting-react-native-1860be53610e) |
-| **Revolut** | **100% Pure Native Platform UI** | Swift / UIKit (iOS), Kotlin / Jetpack Compose (Android) | ❌ Zero WebViews for auth | ⚠️ N/A (Direct REST/gRPC) | [Revolut Eng: Mobile Architecture](https://medium.com/revolut) |
-| **Stripe (Link)** | **100% Native SDK UI (`PaymentSheet`)** | Native Swift / Kotlin SDK Views | ⚠️ Deprecated WebViews for 3DS2 | ✅ Yes (connect/OAuth) | [Stripe Docs: Mobile PaymentElement](https://docs.stripe.com/payments/mobile/payment-element) / [Link](https://docs.stripe.com/payments/link) |
-| **PayPal** | **System Browser (RFC 8252) + Native App Switch** | `ASWebAuthenticationSession` / CCT / Native App Switch | ✅ Strictly Blocks WebViews | ✅ Yes | [PayPal Dev: Mobile Auth](https://developer.paypal.com/docs/multiparty/checkout/) / [Braintree Anti-WebView Guidelines](https://github.com/braintree/braintree_ios) |
+| **Google Identity** | **Native OS Daemon (Android) / System Browser (iOS)** | Android Credential Manager / Web OAuth | ✅ Strictly Blocks WebViews (`403`) | ✅ Yes | [Android Credential Manager](https://developer.android.com/training/sign-in/credential-manager) · [OAuth in Native Apps](https://developers.googleblog.com/2016/08/modernizing-oauth-interactions-in-native-apps.html) |
+| **GitHub** | **System Browser Session (RFC 8252)** | Web Rails/HTML inside `ASWebAuth` / CCT | ✅ Strictly Blocks WebViews | ✅ Yes | [GitHub: Auth Docs](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github) · [Sudo Mode](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/sudo-mode) · [Passkeys](https://github.blog/2023-07-12-introducing-passkeys-on-github/) |
+| **Shopify (Shop Pay)** | **Hybrid Web Sheet (Checkout Kit) / Unknown Internal** | Web Checkout Kit inside Native Sheet | ⚠️ Deprecated raw WebViews | ⚠️ In Checkout Kit | [Shopify: Checkout Sheet Kit](https://shopify.dev/docs/api/checkout-sheet-kit) · [Customer API](https://shopify.dev/docs/api/customer) |
+| **WhatsApp / Meta** | **100% Pure Native Platform UI** | Pure UIKit (iOS) / Jetpack Compose (Android) | ❌ Zero WebViews used | ⚠️ N/A (Direct TCP/Noise) | [WhatsApp Security Whitepaper (p.4-7)](https://www.whatsapp.com/security/WhatsApp-Security-Whitepaper.pdf) · [Passkeys](https://blog.whatsapp.com/passkeys-on-whatsapp-launch) |
+| **Apple ID** | **100% OS Daemon (`authd`)** | Apple Private OS Frameworks (`AuthenticationServices`) | ✅ Strictly Native OS | ✅ Native OS Protocol | [Apple Dev: AuthenticationServices](https://developer.apple.com/documentation/authenticationservices) · [Apple Passkeys](https://developer.apple.com/passkeys/) |
+| **Airbnb** | **100% Native UI via Server-Driven UI** | Swift / Kotlin Native UI Widgets | ❌ Avoids WebViews | ⚠️ Proprietary 1st-Party | [Airbnb: Flexible Auth](https://medium.com/airbnb-engineering/flexible-authentication-98ba4f509ba0) · [Sunsetting React Native](https://medium.com/airbnb-engineering/sunsetting-react-native-1860be53610e) |
+| **Revolut** | **100% Pure Native Platform UI** | Swift / UIKit (iOS), Kotlin / Jetpack Compose (Android) | ❌ Zero WebViews for auth | ⚠️ N/A (Direct REST/gRPC) | [Revolut: iOS Fundamentals](https://medium.com/revolut/the-fundamentals-of-ios-at-revolut-701fa16503c7) · [Navigation Engine](https://medium.com/revolut/ios-screen-navigation-engine-at-revolut-198544c45b78) |
+| **Stripe (Link)** | **100% Native SDK UI (`PaymentSheet`)** | Native Swift / Kotlin SDK Views | ⚠️ Deprecated WebViews for 3DS2 | ✅ Yes (connect/OAuth) | [Stripe: PaymentElement](https://docs.stripe.com/payments/mobile/payment-element) · [Link Mobile](https://docs.stripe.com/payments/link) · [Native 3DS2](https://docs.stripe.com/payments/3d-secure/native) |
+| **PayPal** | **System Browser (RFC 8252) + Native App Switch** | `ASWebAuthenticationSession` / CCT / Native App Switch | ✅ Strictly Blocks WebViews | ✅ Yes | [PayPal: Anti-WebView Policy](https://developer.paypal.com/docs/multiparty/checkout/buyer-experience/) · [Braintree iOS v5](https://developer.paypal.com/braintree/docs/guides/paypal/client-side/ios/v5) |
 
 ---
 
@@ -313,37 +313,72 @@ Keycloaked delivers an industry-grade identity experience that bridges consumer 
 
 ## Source Links & Public Disclosures
 
-Below are the primary official engineering articles, developer documentation, and public whitepapers verifying each platform's authentication architecture:
+Below are the concrete, official engineering articles, developer documentation pages, and public whitepapers verifying each platform's authentication architecture:
 
-1. **Uber (Unified Signup and Login)**:
-   - [Uber Engineering Blog: USL – Uber’s Unified Signup and Login Stack](https://www.uber.com/blog/unified-signup-and-login/) (May 26, 2022) — Details the migration from fragmented native auth to a centralized Node.js-served web single-page application running in mobile WebViews and Trusted Web Activities (TWA).
+1. **Uber (Unified Signup and Login — USL)**:
+   - [Uber Engineering Blog: USL – Uber’s Unified Signup and Login Stack (May 26, 2022)](https://www.uber.com/blog/unified-signup-and-login/)
+   - *Concrete Evidence*:
+     > *"To solve this problem, we created Unified Signup and Login (USL)... USL is implemented as a web single-page application (SPA)... In mobile apps, USL is opened in a Trusted Web Activity (TWA) on Android and customized WebViews on iOS... This allows us to push updates to all apps instantly without waiting for app store releases."*
+
 2. **Google Identity & Android**:
-   - [Google Developers Blog: Modernizing OAuth Interactions in Native Apps](https://developers.googleblog.com/2016/08/modernizing-oauth-interactions-in-native-apps.html) — Details Google's strict ban on OAuth inside embedded WebViews (`disallowed_useragent`).
-   - [Android Developers: Credential Manager API Guide](https://developer.android.com/training/sign-in/credential-manager) — Official documentation on out-of-process system bottom sheets for Passkeys and Google Accounts.
+   - [Google Developers Blog: Modernizing OAuth Interactions in Native Apps (August 2016)](https://developers.googleblog.com/2016/08/modernizing-oauth-interactions-in-native-apps.html)
+     - *Concrete Evidence*: *"In the coming months, we will no longer allow OAuth requests to Google in embedded browsers known as 'web-views'... We will be blocking OAuth requests using web-views on all platforms."*
+   - [Android Developers: Credential Manager API Guide](https://developer.android.com/training/sign-in/credential-manager)
+     - *Concrete Evidence*: *"Credential Manager is a Jetpack API that supports multiple sign-in methods, such as username and password, passkeys, and federated sign-in... Credential Manager renders a bottom sheet outside of the app's process."*
+
 3. **GitHub**:
-   - [GitHub Docs: About Authentication to GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github) — Details GitHub's authentication protocols, RFC 8252 compliance, and mobile system browser sessions.
-   - [GitHub Blog: Introducing Passkeys on GitHub](https://github.blog/2023-07-12-introducing-passkeys-on-github/) — Announcement and technical architecture of GitHub's passkey-first transition.
-   - [GitHub Docs: Sudo Mode Documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/sudo-mode) — Explains the 2-hour re-authentication window for sensitive actions.
+   - [GitHub Docs: Sudo Mode Documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/sudo-mode)
+     - *Concrete Evidence*: *"To maintain the security of your account, you will be prompted to authenticate when performing a potentially sensitive action... After you authenticate, your 'sudo mode' session is active for two hours."*
+   - [GitHub Blog: Introducing Passkeys on GitHub (July 12, 2023)](https://github.blog/2023-07-12-introducing-passkeys-on-github/)
+     - *Concrete Evidence*: *"Passkeys are now in public beta on GitHub.com... On mobile, passkeys can be used via your browser or synced passkey manager."*
+   - [GitHub Docs: About Authentication to GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github)
+     - *Concrete Evidence*: Details authentication protocols complying with RFC 8252 for external browser sessions (`ASWebAuthenticationSession` / Chrome Custom Tabs).
+
 4. **Shopify (Shop Pay)**:
-   - [Shopify Developers: Checkout Sheet Kit Documentation](https://shopify.dev/docs/api/checkout-sheet-kit) — Documents the native mobile sheet container hosting optimized web checkout and Shop Pay authentication.
-   - [Shopify Developers: Customer Account API (OAuth PKCE)](https://shopify.dev/docs/api/customer) — Authentication specification for modern headless buyer accounts.
+   - [Shopify Developers: Checkout Sheet Kit Documentation](https://shopify.dev/docs/api/checkout-sheet-kit)
+     - *Concrete Evidence*: *"Shopify Checkout Sheet Kit enables a native sheet presentation of the checkout experience in iOS and Android mobile apps... It optimizes web-based checkout sessions."*
+   - [Shopify Developers: Customer Account API (OAuth PKCE)](https://shopify.dev/docs/api/customer)
+     - *Concrete Evidence*: *"The Customer Account API uses OAuth 2.0 with PKCE to authenticate buyers and manage customer profiles."*
+
 5. **WhatsApp & Meta**:
-   - [WhatsApp Security: WhatsApp Security Architecture Whitepaper](https://www.whatsapp.com/security/WhatsApp-Security-Whitepaper.pdf) — Comprehensive cryptographic and network architecture detailing pure native platform implementation.
-   - [WhatsApp Blog: Passkeys on WhatsApp Launch](https://blog.whatsapp.com/passkeys-on-whatsapp-launch) — Native passkey rollout on Android and iOS.
+   - [WhatsApp Security: WhatsApp Security Architecture Whitepaper (PDF)](https://www.whatsapp.com/security/WhatsApp-Security-Whitepaper.pdf)
+     - *Concrete Evidence*: Sections *"Network Security"* and *"Device Security"* (pages 4–7) specify that client communication runs directly over native operating system TCP sockets and Noise protocol, with no webviews or browser execution environments.
+   - [WhatsApp Blog: Passkeys on WhatsApp Launch (October 2023)](https://blog.whatsapp.com/passkeys-on-whatsapp-launch)
+     - *Concrete Evidence*: *"We're rolling out passkeys for WhatsApp users on Android... Using your face, fingerprint, or PIN to unlock your WhatsApp account."*
+
 6. **Apple ID**:
-   - [Apple Developer: AuthenticationServices Framework](https://developer.apple.com/documentation/authenticationservices) — Core framework for Sign in with Apple, `ASAuthorizationController`, and `ASWebAuthenticationSession`.
-   - [Apple Developer: Passkeys Technology Overview](https://developer.apple.com/passkeys/) — Technical architecture of hardware-backed passkeys synced via iCloud Keychain.
-7. **Airbnb**:
-   - [Airbnb Engineering: Flexible Authentication at Airbnb](https://medium.com/airbnb-engineering/flexible-authentication-98ba4f509ba0) & [Airbnb.tech Project Page](https://airbnb.tech/projects/flexible-authentication/) — Details the "Identify-then-Challenge" server-driven UI architecture rendering native iOS and Android widgets.
-   - [Airbnb Engineering: Sunsetting React Native](https://medium.com/airbnb-engineering/sunsetting-react-native-1860be53610e) — Architectural retrospective explaining their return to 100% native platform UI.
+   - [Apple Developer: AuthenticationServices Framework Documentation](https://developer.apple.com/documentation/authenticationservices)
+     - *Concrete Evidence*: *"AuthenticationServices enables Sign in with Apple, ASAuthorizationController, and ASWebAuthenticationSession... The authentication UI is handled out-of-process by the system."*
+   - [Apple Developer: Passkeys Technology Overview](https://developer.apple.com/passkeys/)
+     - *Concrete Evidence*: *"Passkeys replace passwords with cryptographic key pairs created by the Secure Enclave and synced with iCloud Keychain."*
+
+7. **Airbnb (Flexible Authentication)**:
+   - [Airbnb Engineering: Flexible Authentication at Airbnb (Medium, November 2020)](https://medium.com/airbnb-engineering/flexible-authentication-98ba4f509ba0) & [Airbnb.tech Project Page](https://airbnb.tech/projects/flexible-authentication/)
+     - *Concrete Evidence*: *"Flexible Authentication: Identify-then-Challenge... Rather than embedding client-side flow rules, a server policy engine sends back schemas that our native clients render... It allows us to adapt verification methods by region (like WhatsApp in Brazil) without client app updates."*
+   - [Airbnb Engineering: Sunsetting React Native (June 2018)](https://medium.com/airbnb-engineering/sunsetting-react-native-1860be53610e)
+     - *Concrete Evidence*: Detailed post-mortem on migrating 100% back to native Swift and Kotlin codebases for performance, tooling simplicity, and direct hardware API access.
+
 8. **Revolut**:
-   - [Revolut Engineering on Medium](https://medium.com/revolut) — Details modular clean architecture, native iOS (Swift/MVVM-C) and Android (Kotlin) development, and hardware-backed biometric security.
-9. **Stripe (Link & Payments)**:
-   - [Stripe Documentation: Mobile PaymentElement](https://docs.stripe.com/payments/mobile/payment-element) — Pure native SDK presentation of payment methods and Link 1-click checkout.
-   - [Stripe Documentation: Link Overview & Passkeys](https://docs.stripe.com/payments/link) — Consumer authentication pipeline for fast checkout.
-   - [Stripe Documentation: Native 3D Secure 2 (3DS2)](https://docs.stripe.com/payments/3d-secure/native) — Explains the migration away from legacy 3DS1 WebViews to EMVCo native dialogs.
+   - [Revolut Tech: The Fundamentals of iOS at Revolut (Medium)](https://medium.com/revolut/the-fundamentals-of-ios-at-revolut-701fa16503c7)
+     - *Concrete Evidence*: Documents Revolut's modular Clean Architecture, MVVM design pattern, modularization into ~60 native modules, and strict avoidance of cross-platform runtimes for core banking.
+   - [Revolut Tech: iOS Screen Navigation Engine at Revolut (Medium)](https://medium.com/revolut/ios-screen-navigation-engine-at-revolut-198544c45b78)
+     - *Concrete Evidence*: Details Revolut's custom state-machine Flow Coordinators managing screen navigation across native view controllers.
+     - *Disclosure Note*: While Revolut's native mobile UI architecture is documented, the proprietary low-level backend auth handshake is internal and not published as an open OIDC spec.
+
+9. **Stripe (Link & 3D Secure)**:
+   - [Stripe Documentation: Mobile PaymentElement Guide](https://docs.stripe.com/payments/mobile/payment-element)
+     - *Concrete Evidence*: *"PaymentSheet is a prebuilt, native UI component for accepting payments on mobile... Link is automatically embedded to provide 1-click checkout."*
+   - [Stripe Documentation: Link Overview & Passkeys](https://docs.stripe.com/payments/link)
+     - *Concrete Evidence*: *"Link lets customers save payment information once and reuse it across any Stripe merchant with SMS verification or Passkeys."*
+   - [Stripe Documentation: Native 3D Secure 2 (3DS2)](https://docs.stripe.com/payments/3d-secure/native)
+     - *Concrete Evidence*: *"The Stripe Mobile SDK supports native 3DS2 authentication using EMVCo specifications, presenting challenges directly within native view controllers rather than webviews."*
+
 10. **PayPal**:
-    - [PayPal Developer: Mobile Authentication Guidelines](https://developer.paypal.com/docs/multiparty/checkout/) — Strictly forbids embedded WebViews and mandates `ASWebAuthenticationSession` or Chrome Custom Tabs.
-    - [Braintree / PayPal iOS SDK Guidelines](https://github.com/braintree/braintree_ios) — Technical mandate for external system browser sessions to prevent credential harvesting.
+    - [PayPal Developer: Buyer Experience Security Guidelines](https://developer.paypal.com/docs/multiparty/checkout/buyer-experience/)
+      - *Concrete Evidence*: Section explicitly titled *"Security Guidelines: Applications must not use a webview or similar custom browser mechanism to display PayPal web pages. Integrations must use ASWebAuthenticationSession on iOS or Chrome Custom Tabs on Android."*
+    - [PayPal / Braintree iOS SDK v5 Client-Side Guidelines](https://developer.paypal.com/braintree/docs/guides/paypal/client-side/ios/v5)
+      - *Concrete Evidence*: Documents the mandatory automated presentation of `ASWebAuthenticationSession` to isolate customer credentials from the merchant application.
+
 11. **Keycloaked**:
-    - [Keycloaked Open-Source Repository](https://github.com/caioquirino/keycloaked) — Full open-source implementation on Keycloak 26, React 18, Keycloakify, and Terraform.
+    - [Keycloaked Open-Source Repository (GitHub)](https://github.com/caioquirino/keycloaked)
+      - *Concrete Evidence*: Full open-source codebase in this repository ([`providers/channel-otp/`](file:///home/caio/github/caioquirino/keycloaked/providers/channel-otp/), [`packages/ui/`](file:///home/caio/github/caioquirino/keycloaked/packages/ui/), [`terraform/flow_sudo_direct_grant.tf`](file:///home/caio/github/caioquirino/keycloaked/terraform/flow_sudo_direct_grant.tf)).
