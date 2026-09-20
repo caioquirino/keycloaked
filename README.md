@@ -33,7 +33,7 @@
 
 **Keycloaked** is an open-source reference architecture that brings consumer-grade authentication—inspired by Uber's Unified Signup and Login (USL)—to **Keycloak 26**. It combines modern passwordless identity, biometric passkeys, dynamic multi-channel OTP routing, zero-username registration, and a unified React design system shared between your client application and Keycloak's login pages.
 
-> 📊 **In-Depth Benchmark Analysis**: Read our comprehensive [Industry Benchmark & Architectural Comparison](docs/BENCHMARK_COMPARISON.md) evaluating Keycloaked against **Uber (USL)**, **Google Identity**, **GitHub**, **Shopify (Shop Pay)**, **WhatsApp / Meta**, and **Apple ID**.
+> 📊 **In-Depth Benchmark Analysis**: Read our comprehensive [Industry Benchmark & Architectural Comparison](docs/BENCHMARK_COMPARISON.md) evaluating Keycloaked against **Uber (USL)**, **Google Identity**, **GitHub**, **Shopify (Shop Pay)**, **WhatsApp / Meta**, **Apple ID**, **Revolut**, **Stripe**, and **PayPal**.
 
 ### System Architecture Diagram
 

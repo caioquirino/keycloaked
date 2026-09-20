@@ -1,14 +1,16 @@
 # Industry Authentication Benchmark & Comparative Architecture Analysis
 
-> **Evaluating Keycloaked against Consumer & Enterprise Identity Leaders**  
-> Technical breakdown focusing **strictly on the Sign-In / Sign-Up / OAuth2 / OIDC mobile and web authentication frontends** across Uber (USL), Google Identity, GitHub, Shopify (Shop Pay), WhatsApp/Meta, Apple ID, and Airbnb.
+> **Evaluating Keycloaked against Consumer, Developer & Fintech Identity Leaders**  
+> Technical breakdown focusing **strictly on the Sign-In / Sign-Up / OAuth2 / OIDC mobile and web authentication frontends** across Uber (USL), Google Identity, GitHub, Shopify (Shop Pay), WhatsApp/Meta, Apple ID, Airbnb, Revolut, Stripe, and PayPal.
 
 ---
 
 ## Table of Contents
 
 - [Scope & Definitions: The Auth Frontend Layer](#scope--definitions-the-auth-frontend-layer)
-- [Executive Summary & Competitive Matrix](#executive-summary--competitive-matrix)
+- [Executive Summary & Competitive Matrices](#executive-summary--competitive-matrices)
+  - [1. Mobile Frontend Architecture & Rendering Matrix](#1-mobile-frontend-architecture--rendering-matrix)
+  - [2. Identity Features & Authentication Capabilities Matrix](#2-identity-features--authentication-capabilities-matrix)
 - [Platform-by-Platform Sign-In/Sign-Up Frontend Architecture](#platform-by-platform-sign-insign-up-frontend-architecture)
   - [1. Uber (Unified Signup and Login — USL)](#1-uber-unified-signup-and-login--usl)
   - [2. Google Identity](#2-google-identity)
@@ -17,12 +19,16 @@
   - [5. WhatsApp & Meta](#5-whatsapp--meta)
   - [6. Apple ID](#6-apple-id)
   - [7. Airbnb (Flexible Authentication)](#7-airbnb-flexible-authentication)
-  - [8. Keycloaked (This Repository)](#8-keycloaked-this-repository)
+  - [8. Revolut](#8-revolut)
+  - [9. Stripe (Stripe Link & Connect)](#9-stripe-stripe-link--connect)
+  - [10. PayPal (PayPal Checkout & App Switch)](#10-paypal-paypal-checkout--app-switch)
+  - [11. Keycloaked (This Repository)](#11-keycloaked-this-repository)
 - [The Four Auth Frontend Paradigms: Trade-Off Analysis](#the-four-auth-frontend-paradigms-trade-off-analysis)
   - [1. Server-Rendered Web SPA on WebView / TWA (Uber Model)](#1-server-rendered-web-spa-on-webview--twa-uber-model)
-  - [2. System Browser Session / RFC 8252 AppAuth (GitHub / Keycloaked Model)](#2-system-browser-session--rfc-8252-appauth-github--keycloaked-model)
+  - [2. System Browser Session / RFC 8252 AppAuth (GitHub / PayPal / Keycloaked Model)](#2-system-browser-session--rfc-8252-appauth-github--paypal--keycloaked-model)
   - [3. Native Server-Driven UI (Airbnb Model)](#3-native-server-driven-ui-airbnb-model)
-  - [4. OS-Level Daemon / Out-of-Process (Apple ID / Google Credential Manager)](#4-os-level-daemon--out-of-process-apple-id--google-credential-manager)
+  - [4. Pure Native Platform UI (Revolut / WhatsApp / Stripe Link Model)](#4-pure-native-platform-ui-revolut--whatsapp--stripe-link-model)
+  - [5. OS-Level Daemon / Out-of-Process (Apple ID / Google Credential Manager)](#5-os-level-daemon--out-of-process-apple-id--google-credential-manager)
 - [Detailed Feature Dimension Benchmark](#detailed-feature-dimension-benchmark)
   - [1. Unified Identifier-First Entry (USL)](#1-unified-identifier-first-entry-usl)
   - [2. Multi-Channel OTP & Fallback Routing](#2-multi-channel-otp--fallback-routing)
@@ -37,32 +43,53 @@
 ## Scope & Definitions: The Auth Frontend Layer
 
 > [!IMPORTANT]
-> **Strict Scope Notice**: This benchmark evaluates **only the Sign-In, Sign-Up, and OAuth2/OIDC execution frontends**. It does *not* evaluate the general mobile application architecture (which may use different technologies for maps, feeds, or checkout). Where internal implementation details of an identity provider are not publicly disclosed by engineering teams or whitepapers, it is explicitly marked as **Unknown / Proprietary**.
+> **Strict Scope Notice**: This benchmark evaluates **only the Sign-In, Sign-Up, and OAuth2/OIDC execution frontends**. It does *not* evaluate the general mobile application architecture (which may use different technologies for banking dashboards, maps, feeds, or checkout). Where internal implementation details of an identity provider are not publicly disclosed by engineering teams or whitepapers, it is explicitly marked as **Unknown / Proprietary**.
 
 ### Terminology
 - **Embedded WebView**: In-app `WKWebView` (iOS) or `android.webkit.WebView` running inside the application's process.
 - **Trusted Web Activity (TWA) / Custom Tabs**: Chrome-backed browser instances hosted within an Android app that share the system browser state without URL bar chrome.
 - **System Browser Session (RFC 8252)**: Secure, ephemeral browser sheets (`ASWebAuthenticationSession` on iOS, Chrome Custom Tabs on Android) mandated by OAuth 2.0 specifications.
 - **Native Server-Driven UI (SDUI)**: Backend returns layout/state JSON schemas; the client renders pure native UI widgets (SwiftUI/Compose).
+- **Pure Native Platform UI**: Direct platform UI views (Swift/UIKit on iOS, Kotlin/Compose on Android) executing against REST/gRPC backend endpoints without web runtimes.
 - **OS-Level Daemon**: Dialogs rendered completely out-of-process by the operating system kernel/security daemons (`authd`, Google Play Services).
 
 ---
 
-## Executive Summary & Competitive Matrix
+## Executive Summary & Competitive Matrices
 
-| Dimension / Feature | **Keycloaked** | **Uber (USL)** | **Google Identity** | **GitHub** | **Shopify (Shop Pay)** | **WhatsApp / Meta** | **Apple ID** | **Airbnb** |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Auth FE Implementation** | **System Browser (AppAuth) or Direct Grant** | **Server-Rendered Web SPA on WebView/TWA** | **Native OS Daemon (Android) / System Browser (iOS)** | **System Browser (ASWebAuth / CCT)** | **Hybrid Web Sheet (Checkout Kit) / Unknown Internal** | **100% Pure Native Platform UI** | **100% OS Daemon (`authd`)** | **100% Native UI via Server-Driven UI** |
-| **Auth Rendering Technology** | React 18 (Keycloakify) + `@keycloaked/ui` | Node.js Server-Rendered SPA + WebViews/TWAs | Android Credential Manager / Web OAuth | Web HTML/Rails inside System Browser | Web Checkout Kit inside Native Sheet | Pure UIKit (iOS) / Jetpack Compose (Android) | Apple Private OS Frameworks | Swift / Kotlin Native UI Widgets |
-| **Public Disclosure Status** | 100% Open Source | Verified via Uber Eng Blog | Verified via Android & Google Docs | Verified via GitHub Eng Docs | Partially Disclosed (Checkout Kit public) | Verified via Client Decompilation | Verified via Apple Developer Specs | Verified via Airbnb Eng Blog |
-| **Unified Identifier-First (USL)** | ✅ Full | ✅ Full (Pioneer) | ✅ Full | ⚠️ Separate screens | ✅ Full | ✅ Full (Phone-only) | ⚠️ Separate modal | ✅ Full |
-| **Zero Usernames (UUID Identity)** | ✅ Auto UUID | ✅ Internal UUID | ❌ User-facing | ❌ User-facing | ✅ Internal ID | ✅ Phone number | ✅ Apple ID / Email | ✅ Internal ID |
-| **Multi-Channel OTP Routing** | ✅ SMS, WA, Email | ✅ SMS, WA, Email | ❌ SMS, Voice | ❌ SMS, TOTP | ❌ SMS, Email | ❌ SMS, WA | ❌ SMS, Push | ⚠️ SMS, WA (Select regions) |
-| **Live Factor / Channel Switch** | ✅ In-session switch | ✅ In-session switch | ⚠️ "Try another way" | ⚠️ Fallback modal | ⚠️ Email fallback | ❌ Rigid retry | ⚠️ Device / SMS | ⚠️ Fallback modal |
-| **Passkeys / WebAuthn** | ✅ Full + Cond. UI | ✅ Native & WebAuthn | ✅ Default Factor | ✅ Autofill + Security | ⚠️ Biometric in app | ✅ Passkeys in app | ✅ Platform Default | ⚠️ Native Biometrics |
-| **In-App Sudo Mode (Step-Up)** | ✅ Dedicated Direct Grant | ⚠️ Card edit re-auth | ✅ Critical Action Check | ✅ 2-hr Sudo Window | ❌ Direct checkout | ❌ Biometric lock only | ✅ Device Passcode | ⚠️ High-trust booking check |
-| **Single-Use Replay & Cooldown** | ✅ Session burn + 30s | ✅ Strict cooldown | ✅ Dynamic backoff | ✅ Cooldown | ✅ 60s cooldown | ✅ Progressive backoff | ✅ Rate limited | ✅ Rate limited |
-| **Shared Design System with IdP** | ✅ `@keycloaked/ui` (1:1) | ✅ Base Web Design | ⚠️ Material 3 | ⚠️ Primer | ⚠️ Polaris | ❌ Native only | ❌ Human Interface | ⚠️ DLS (Design Lang Sys) |
+### 1. Mobile Frontend Architecture & Rendering Matrix
+
+| Platform | Strict Auth FE Implementation | Auth Rendering Technology | Anti-WebView Policy | RFC 8252 Compliant | Public Disclosure Status |
+|---|---|---|:---:|:---:|:---:|
+| **Keycloaked** | **System Browser (AppAuth) or Direct Grant** | React 18 (Keycloakify) + `@keycloaked/ui` or Native UI | ⚠️ Enforces System Browser | ✅ Yes | **100% Open Source** |
+| **Uber (USL)** | **Server-Rendered Web SPA on WebView/TWA** | Node.js Server-Rendered SPA + WebViews/TWAs | ❌ Uses TWA / Custom WebViews | ⚠️ Proprietary 1st-Party | Verified *(Uber Eng Blog)* |
+| **Google Identity** | **Native OS Daemon (Android) / System Browser (iOS)** | Android Credential Manager / Web OAuth | ✅ Strictly Blocks WebViews (`403`) | ✅ Yes | Verified *(Android/Google Docs)* |
+| **GitHub** | **System Browser Session (RFC 8252)** | Web Rails/HTML inside `ASWebAuth` / CCT | ✅ Strictly Blocks WebViews | ✅ Yes | Verified *(GitHub Docs)* |
+| **Shopify (Shop Pay)** | **Hybrid Web Sheet (Checkout Kit) / Unknown Internal** | Web Checkout Kit inside Native Sheet | ⚠️ Deprecated raw WebViews | ⚠️ In Checkout Kit | Partially Disclosed *(Shopify Docs)* |
+| **WhatsApp / Meta** | **100% Pure Native Platform UI** | Pure UIKit (iOS) / Jetpack Compose (Android) | ❌ Zero WebViews used | ⚠️ N/A (Direct TCP/Noise) | Verified *(Client Decompilation)* |
+| **Apple ID** | **100% OS Daemon (`authd`)** | Apple Private OS Frameworks (`AuthenticationServices`) | ✅ Strictly Native OS | ✅ Native OS Protocol | Verified *(Apple Dev Specs)* |
+| **Airbnb** | **100% Native UI via Server-Driven UI** | Swift / Kotlin Native UI Widgets | ❌ Avoids WebViews | ⚠️ Proprietary 1st-Party | Verified *(Airbnb Eng Blog)* |
+| **Revolut** | **100% Pure Native Platform UI** | Swift / UIKit (iOS), Kotlin / Jetpack Compose (Android) | ❌ Zero WebViews for auth | ⚠️ N/A (Direct REST/gRPC) | Verified *(Revolut Eng Blog)* |
+| **Stripe (Link)** | **100% Native SDK UI (`PaymentSheet`)** | Native Swift / Kotlin SDK Views | ⚠️ Deprecated WebViews for 3DS2 | ✅ Yes (connect/OAuth) | Verified *(Stripe Dev Docs)* |
+| **PayPal** | **System Browser (RFC 8252) + Native App Switch** | `ASWebAuthenticationSession` / CCT / Native App Switch | ✅ Strictly Blocks WebViews | ✅ Yes | Verified *(PayPal Dev Docs)* |
+
+---
+
+### 2. Identity Features & Authentication Capabilities Matrix
+
+| Platform | Unified Identifier-First (USL) | Zero Usernames (UUID Identity) | Multi-Channel OTP Routing | Live Factor / Channel Switch | Passkeys / WebAuthn | In-App Sudo Mode (Step-Up) | Cooldown & Single-Use Replay |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Keycloaked** | ✅ Full | ✅ Auto UUID | ✅ SMS, WA, Email | ✅ In-session switch | ✅ Full + Cond. UI | ✅ Dedicated Direct Grant | ✅ Session burn + 30s |
+| **Uber (USL)** | ✅ Full (Pioneer) | ✅ Internal UUID | ✅ SMS, WA, Email | ✅ In-session switch | ✅ Native & WebAuthn | ⚠️ Card edit re-auth | ✅ Strict cooldown |
+| **Google Identity** | ✅ Full | ❌ User-facing | ❌ SMS, Voice | ⚠️ "Try another way" | ✅ Default Factor | ✅ Critical Action Check | ✅ Dynamic backoff |
+| **GitHub** | ⚠️ Separate screens | ❌ User-facing | ❌ SMS, TOTP | ⚠️ Fallback modal | ✅ Autofill + Security | ✅ 2-hr Sudo Window | ✅ Cooldown |
+| **Shopify (Shop Pay)** | ✅ Full | ✅ Internal ID | ❌ SMS, Email | ⚠️ Email fallback | ⚠️ Biometric in app | ❌ Direct checkout | ✅ 60s cooldown |
+| **WhatsApp / Meta** | ✅ Full (Phone-only) | ✅ Phone number | ❌ SMS, WA | ❌ Rigid retry | ✅ Passkeys in app | ❌ Biometric lock only | ✅ Progressive backoff |
+| **Apple ID** | ⚠️ Separate modal | ✅ Apple ID / Email | ❌ SMS, Push | ⚠️ Device / SMS | ✅ Platform Default | ✅ Device Passcode | ✅ Rate limited |
+| **Airbnb** | ✅ Full | ✅ Internal ID | ⚠️ SMS, WA (Select regions) | ⚠️ Fallback modal | ⚠️ Native Biometrics | ⚠️ High-trust booking check | ✅ Rate limited |
+| **Revolut** | ✅ Full (Phone-first) | ✅ Internal Customer ID | ⚠️ SMS, Email, Push | ⚠️ Push -> SMS fallback | ⚠️ Biometric Passcode | ✅ Step-Up for transfers/crypto | ✅ Dynamic backoff |
+| **Stripe (Link)** | ✅ Full (1-Click) | ✅ Internal Customer ID | ❌ SMS, Email | ⚠️ Email fallback | ✅ Passkeys supported | ✅ Dashboard Step-Up | ✅ Strict rate limits |
+| **PayPal** | ✅ Full | ✅ Email / Phone ID | ❌ SMS, Email | ⚠️ "Try another way" | ✅ Platform Passkeys (FIDO2)| ✅ Risk-based challenge step-up| ✅ Rate limited |
 
 ---
 
@@ -139,13 +166,41 @@
 
 ---
 
-### 8. Keycloaked (This Repository)
+### 8. Revolut
+- **Strict Auth Flow Implementation**: **100% Pure Native Platform UI (Swift on iOS, Kotlin on Android)**.
+- **Architectural Reality**:
+  - Revolut’s consumer onboarding and login flow is built **entirely with pure native UI** (Swift/UIKit on iOS and Kotlin/Jetpack Compose on Android).
+  - **The Flow**: Users enter their mobile number (E.164) -> enter their 6-digit numeric App Passcode -> verify biometric liveness (Face ID / Fingerprint via `LocalAuthentication` and `BiometricPrompt`).
+  - **Hardware Security & Step-Up**: Revolut stores session keys in the device's Secure Enclave / Android Keystore. High-risk transactions (new device logins, large crypto/fiat transfers) trigger an in-app selfie liveness check (via biometric SDKs like Onfido) or an in-app out-of-band push notification.
+  - **WebView Usage**: Revolut **strictly avoids WebViews for core authentication**. WebViews are used only in secondary contexts (e.g., viewing terms of service, customer support chats, or merchant "Revolut Pay" web checkouts when the native app is not installed).
+
+---
+
+### 9. Stripe (Stripe Link & Connect)
+- **Strict Auth Flow Implementation**: **100% Native SDK UI (`PaymentSheet`) & Secure System Browser (Connect Onboarding)**.
+- **Architectural Reality**:
+  - **Stripe Link (1-Click Checkout in Mobile Apps)**: When integrated via the native **Mobile Payment Element (`PaymentSheet`)**, Link authentication is rendered as **pure native platform UI** (Swift/Kotlin). Customers input their email/phone and verify a 6-digit SMS OTP or Passkey directly in the native sheet without launching a WebView.
+  - **3D Secure 2 (3DS2)**: The Stripe SDK renders bank authentication challenges natively using the official EMVCo 3DS2 native specification, completely retiring older legacy 3DS1 WebViews.
+  - **Stripe Connect & Dashboard Onboarding**: For seller identity verification and KYC, Stripe launches a secure system browser session (`SFSafariViewController` / Chrome Custom Tabs) pointing to `connect.stripe.com`, ensuring strict origin isolation.
+
+---
+
+### 10. PayPal (PayPal Checkout & App Switch)
+- **Strict Auth Flow Implementation**: **System Browser Session (RFC 8252) + Native App Switch (Zero Embedded WebViews)**.
+- **Architectural Reality**:
+  - **Strict Anti-WebView Enforcement**: PayPal **actively forbids and blocks embedded WebViews (`WKWebView`/`WebView`)** for authentication and payments. If a developer attempts to load PayPal login in an embedded WebView, PayPal's security systems block the transaction to prevent credential harvesting.
+  - **Third-Party Merchant Apps**: PayPal authentication must be launched via **`ASWebAuthenticationSession` on iOS** and **Chrome Custom Tabs on Android**, or via **"App Switch"** (deep-linking into the installed native PayPal app).
+  - **Passkeys (FIDO2)**: PayPal was one of the earliest financial institutions to launch Passkeys (2022). Passkey authentication triggers seamlessly within the system browser session or native app via Apple iCloud Keychain / Google Password Manager.
+
+---
+
+### 11. Keycloaked (This Repository)
 - **Strict Auth Flow Implementation**: **Keycloakify React 18 Web Theme served in System Browser (RFC 8252) OR Headless Native REST API**.
 - **Architectural Reality**:
   - **Web & Desktop**: Uses Keycloakify to compile React 18 components into Keycloak 26 FreeMarker templates, perfectly styled using `@keycloaked/ui` design tokens.
   - **Mobile Client Integration**:
-    - *Default Paradigm (System Browser via AppAuth)*: Aligns directly with **GitHub** and **Google on iOS**. Mobile apps launch `ASWebAuthenticationSession` or Chrome Custom Tabs using `AppAuth-iOS`/`AppAuth-Android` or `react-native-app-auth`. It gives teams instant zero-recompile IdP updates, WebAuthn Conditional UI autofill, and shared Safari/Chrome sessions.
-    - *Headless Native Paradigm (Direct Grant)*: For teams wanting an **Airbnb-style pure native UI** or **WhatsApp-style zero-webview experience**, Keycloaked's custom SPIs and dedicated Direct Grant flows (`flow_sudo_direct_grant.tf`) can be consumed directly via REST by native Swift, Kotlin, or React Native screens.
+    - *Default Paradigm (System Browser via AppAuth)*: Aligns directly with **GitHub, PayPal, and Google on iOS**. Mobile apps launch `ASWebAuthenticationSession` or Chrome Custom Tabs using `AppAuth-iOS`/`AppAuth-Android` or `react-native-app-auth`. It gives teams instant zero-recompile IdP updates, WebAuthn Conditional UI autofill, and shared Safari/Chrome sessions.
+    - *Headless Native Paradigm (Direct Grant)*: For teams wanting an **Airbnb-style pure native UI, Revolut-style native auth, or WhatsApp-style zero-webview experience**, Keycloaked's custom SPIs and dedicated Direct Grant flows (`flow_sudo_direct_grant.tf`) can be consumed directly via REST by native Swift, Kotlin, or React Native screens.
 
 ---
 
@@ -157,7 +212,7 @@
 │    Fastest deployment iteration; single web codebase; no app store delays;   │
 │    can feel slightly less responsive than pure native on low-end devices.    │
 ├───────────────────────────────────────────────────────────────────────────────┤
-│ 2. System Browser Session / RFC 8252 AppAuth (GitHub, Keycloaked Default)     │
+│ 2. System Browser Session / RFC 8252 AppAuth (GitHub, PayPal, Keycloaked)     │
 │    Mandated for secure OAuth; shares OS browser cookies and passkeys;         │
 │    immune to host-app tampering; displays a brief system browser sheet.      │
 ├───────────────────────────────────────────────────────────────────────────────┤
@@ -165,7 +220,11 @@
 │    100% native UI rendering with server-controlled flow logic; requires       │
 │    building custom JSON-to-Native UI parsers in both Swift and Kotlin.       │
 ├───────────────────────────────────────────────────────────────────────────────┤
-│ 4. OS-Level System Daemon (Apple ID, Google Play Services)                    │
+│ 4. Pure Native Platform UI (Revolut, WhatsApp, Stripe Link)                   │
+│    Fastest rendering, native biometrics and SMS auto-read; requires           │
+│    maintaining separate Swift and Kotlin codebases and submitting app updates.│
+├───────────────────────────────────────────────────────────────────────────────┤
+│ 5. OS-Level System Daemon (Apple ID, Google Play Services)                    │
 │    Unmatched security and zero-click biometrics; strictly restricted to OS   │
 │    owners (Apple, Google); unavailable for custom third-party auth stacks.    │
 └───────────────────────────────────────────────────────────────────────────────┘
@@ -173,32 +232,34 @@
 
 ### Detailed Trade-Off Comparison
 
-| Paradigm | Exemplar | Latency | Passkey Support | Security Model | Update Velocity |
+| Paradigm | Exemplars | Latency | Passkey Support | Security Model | Update Velocity |
 |---|---|:---:|:---:|:---:|:---:|
 | **Server Web on WebView/TWA** | Uber USL | ~200–500ms | ⚠️ Requires TWA / bridge | App-isolated storage | Instant (Server deploy) |
-| **System Browser (AppAuth)** | GitHub, Keycloaked | ~150–350ms | ✅ Native Browser WebAuthn | Sandboxed from host app | Instant (Server deploy) |
+| **System Browser (AppAuth)** | GitHub, PayPal, Keycloaked | ~150–350ms | ✅ Native Browser WebAuthn | Sandboxed from host app | Instant (Server deploy) |
 | **Native Server-Driven UI** | Airbnb | ~10–30ms | ✅ Native OS APIs | Host app process | Dynamic via JSON schema |
-| **OS-Level System Daemon** | Apple ID, Google | Instant (~0ms) | ✅ Platform Authenticator | Hardware/Daemon isolated | OS updates only |
+| **Pure Native Platform UI** | Revolut, WhatsApp, Stripe Link | Instant (~10–20ms)| ✅ Direct OS Biometrics | Hardware Enclave bound | Requires App Store release |
+| **OS-Level System Daemon** | Apple ID, Google Play Services | Instant (~0ms) | ✅ Platform Authenticator | Kernel / Daemon isolated | OS updates only |
 
 ---
 
 ## Detailed Feature Dimension Benchmark
 
 ### 1. Unified Identifier-First Entry (USL)
-- **Uber & Keycloaked**: Merge login and registration into a single input field. The user inputs their email or E.164 phone number, and the backend determines the next challenge.
+- **Uber, Revolut, Stripe Link, and Keycloaked**: Merge login and registration into a single input field. The user inputs their email or E.164 phone number, and the backend determines the next challenge automatically.
 - **GitHub**: Still presents distinct "Sign in" and "Create an account" pages.
-- **WhatsApp**: Requires phone numbers exclusively; does not support email as an initial identifier.
+- **WhatsApp & Revolut**: Phone numbers serve as the primary identity anchor; email is secondary or used for recovery.
 
 ### 2. Multi-Channel OTP & Fallback Routing
 - **Uber & Keycloaked**: Lead the benchmark by supporting **live, in-session switching** between SMS, WhatsApp, and Email. If SMS delivery is delayed, users can click *"Send via WhatsApp instead"* without resetting their session.
-- **Google & GitHub**: Emphasize TOTP authenticator apps and hardware security keys over carrier-dependent channels (WhatsApp).
+- **Revolut**: Uses In-App Push notifications as the primary 2FA factor for card payments and desktop logins, falling back to SMS OTP.
+- **Google, GitHub, and Stripe**: Emphasize TOTP authenticator apps, hardware security keys, and Passkeys over carrier-dependent SMS.
 
 ### 3. Zero Usernames & UUID Identity
-- **Keycloaked, Uber, Shopify, and Airbnb**: Abstract away user-facing usernames entirely. Users authenticate using real-world identifiers (phone/email), while backend systems bind state to immutable UUIDs (`preferred_username`).
+- **Keycloaked, Uber, Shopify, Airbnb, Revolut, and Stripe**: Abstract away user-facing usernames entirely. Users authenticate using real-world identifiers (phone/email), while backend systems bind state to immutable UUIDs (`preferred_username`).
 - **Google & GitHub**: Require user-facing usernames/handles due to legacy namespaces and public profile conventions (`github.com/:username`).
 
 ### 4. In-App Sudo Mode (Step-Up Re-Authentication)
-- **GitHub**: Pioneers the 2-hour Sudo Mode window for sensitive mutations (SSH keys, repository transfers, billing).
+- **GitHub & Revolut**: Gold standards for step-up security. GitHub enforces a 2-hour window for sensitive developer actions; Revolut enforces immediate biometric/passcode step-up for financial transfers and card unfreezes.
 - **Keycloaked**: Replicates this pattern via a dedicated Keycloak direct grant flow (`flow_sudo_direct_grant.tf`) with a 15-minute elevated clearance token, allowing in-app modal verification without resetting the browser's primary SSO session.
 
 ---
@@ -206,19 +267,21 @@
 ## Gap Analysis: Where Keycloaked Leads vs. Opportunities for Improvement
 
 ### Where Keycloaked Leads the Pack
-1. **Open-Source Enterprise Flexibility**: Replicates proprietary architectures (Uber's USL and WhatsApp OTP switching, GitHub's Sudo Mode) on a modern **Keycloak 26** foundation.
+1. **Open-Source Enterprise Flexibility**: Replicates proprietary architectures (Uber's USL and WhatsApp OTP switching, GitHub's Sudo Mode, Stripe Link's single-factor lookup) on a modern **Keycloak 26** foundation.
 2. **True Design System Parity**: Keycloakify + `@keycloaked/ui` ensures pixel-for-pixel visual alignment between client SPAs and Keycloak login screens.
-3. **Multi-Protocol Adaptability**: Can be deployed via standard RFC 8252 System Browsers (like GitHub) or headless Direct Grant APIs (like Airbnb/WhatsApp).
+3. **Multi-Protocol Adaptability**: Can be deployed via standard RFC 8252 System Browsers (like GitHub and PayPal) or headless Direct Grant APIs (like Revolut, Airbnb, and WhatsApp).
 
 ### High-Priority Improvement Opportunities
 1. **Silent Network Authentication (Carrier SNA)**:
    - *Industry benchmark*: Uber silently verifies mobile device SIMs over cellular headers (GSMA Mobile Connect) in emerging markets.
    - *Keycloaked roadmap*: Add a carrier lookup SPI to authenticate mobile numbers without sending an SMS OTP.
 2. **WebOTP Mobile Auto-Fill**:
-   - *Industry benchmark*: Shopify and Uber auto-read incoming SMS verification codes.
+   - *Industry benchmark*: Shopify, Stripe Link, and Uber auto-read incoming SMS verification codes.
    - *Keycloaked roadmap*: Add `navigator.credentials.get({ otp: { transport: ["sms"] } })` to the Keycloakify login-otp page.
 3. **WhatsApp Interactive Button Templates**:
    - *Industry benchmark*: Uber and Meta utilize WhatsApp Cloud API templates with interactive "Copy Code" or 1-tap verification buttons.
+4. **Hardware Biometric In-App Sudo Mode**:
+   - *Industry benchmark*: Revolut and Apple ID invoke native Secure Enclave biometrics immediately for sensitive actions.
 
 ---
 
@@ -237,7 +300,7 @@
 
 ## Conclusion & Actionable Roadmap
 
-Keycloaked delivers an industry-grade identity experience that bridges Uber’s multi-channel consumer velocity with enterprise standards.
+Keycloaked delivers an industry-grade identity experience that bridges consumer multi-channel agility with fintech-grade step-up security.
 
 ### Implementation Milestones:
 - [ ] **Phase 1**: Implement Post-Auth Passkey Enrollment Nudge after SMS/WhatsApp OTP verification.
