@@ -1,0 +1,9 @@
+# Keycloak Connection Configuration
+keycloak_url            = "http://localhost:8080"
+keycloak_admin_username = "admin"
+keycloak_admin_password = "admin"
+
+# Realm Configuration
+realm_name              = "playground"
+login_theme             = "keycloakify-starter"
+client_id               = "playground-app"

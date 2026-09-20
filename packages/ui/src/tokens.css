@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ==========================================================================
+     Keycloaked Design System - Light Mode Tokens (Default)
+     ========================================================================== */
+
+  /* Brand Accents */
+  --keycloaked-blue: #225EE2;
+  --keycloaked-blue-dark: #1B53CF;
+  --keycloaked-blue-light: #EEF2FD;
+  --keycloaked-blue-glow: rgba(34, 94, 226, 0.25);
+
+  --keycloaked-coral: #FF8048;
+  --keycloaked-coral-dark: #F06E32;
+  --keycloaked-coral-light: #FFF0E8;
+  --keycloaked-coral-glow: rgba(255, 128, 72, 0.25);
+
+  /* Semantic Layout Surfaces */
+  --keycloaked-bg: #FCFAF6;
+  --keycloaked-bg-surface: #FFFFFF;
+  --keycloaked-bg-muted: #F7F2E9;
+  --keycloaked-bg-glass: rgba(255, 255, 255, 0.85);
+
+  /* Borders */
+  --keycloaked-border: #E2E8F0;
+  --keycloaked-border-subtle: #EAE7DD;
+
+  /* Typography */
+  --keycloaked-text: #191420;
+  --keycloaked-text-muted: #626773;
+  --keycloaked-text-subtle: #9499A5;
+  --keycloaked-text-inverse: #FFFFFF;
+
+  /* Backward Compatibility Variables */
+  --keycloaked-sand: #FCFAF6;
+  --keycloaked-sand-muted: #F7F2E9;
+  --keycloaked-sand-border: #EAE7DD;
+  --keycloaked-black: #191420;
+  --keycloaked-charcoal: #1F1E30;
+  --keycloaked-slate: #29323F;
+  --keycloaked-muted: #626773;
+  --keycloaked-subtle: #9499A5;
+  --keycloaked-white: #FFFFFF;
+
+  /* Status Colors */
+  --keycloaked-success: #2EB84F;
+  --keycloaked-success-bg: #EAF8ED;
+  --keycloaked-error: #E03027;
+  --keycloaked-error-bg: #FFF0EF;
+  --keycloaked-warning: #E56F43;
+  --keycloaked-warning-bg: #FFF5F0;
+  --keycloaked-info: #225EE2;
+  --keycloaked-info-bg: #EEF2FD;
+
+  /* Font */
+  --font-keycloaked: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-keycloaked: var(--font-keycloaked);
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Motion */
+  --ease-keycloaked: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-keycloaked: var(--ease-keycloaked);
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px -4px rgba(25, 20, 32, 0.07), 0 2px 8px -2px rgba(25, 20, 32, 0.04);
+  --shadow-card-hover: 0 12px 32px -8px rgba(25, 20, 32, 0.12), 0 4px 12px -2px rgba(25, 20, 32, 0.06);
+  --shadow-elevated: 0 24px 48px -12px rgba(25, 20, 32, 0.12);
+  --shadow-primary: 0 4px 16px var(--keycloaked-blue-glow);
+  --shadow-coral: 0 4px 16px var(--keycloaked-coral-glow);
+
+  /* Atmospheric Background Glows */
+  --glow-coral: rgba(255, 128, 72, 0.12);
+  --glow-blue: rgba(34, 94, 226, 0.10);
+
+  /* Transitions */
+  --ease-keycloaked: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+}
+
+/* ==========================================================================
+   Keycloaked Design System - System Dark Mode (Automatic)
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* Brand Accents (luminous on dark backgrounds) */
+    --keycloaked-blue: #3B82F6;
+    --keycloaked-blue-dark: #2563EB;
+    --keycloaked-blue-light: rgba(59, 130, 246, 0.18);
+    --keycloaked-blue-glow: rgba(59, 130, 246, 0.35);
+
+    --keycloaked-coral: #FF8F5C;
+    --keycloaked-coral-dark: #F97316;
+    --keycloaked-coral-light: rgba(255, 143, 92, 0.18);
+    --keycloaked-coral-glow: rgba(255, 143, 92, 0.35);
+
+    /* Semantic Layout Surfaces */
+    --keycloaked-bg: #0C0E14;
+    --keycloaked-bg-surface: #151821;
+    --keycloaked-bg-muted: #1E2330;
+    --keycloaked-bg-glass: rgba(21, 24, 33, 0.85);
+
+    /* Borders */
+    --keycloaked-border: rgba(255, 255, 255, 0.11);
+    --keycloaked-border-subtle: rgba(255, 255, 255, 0.07);
+
+    /* Typography */
+    --keycloaked-text: #F8FAFC;
+    --keycloaked-text-muted: #94A3B8;
+    --keycloaked-text-subtle: #64748B;
+    --keycloaked-text-inverse: #0C0E14;
+
+    /* Backward Compatibility Variables */
+    --keycloaked-sand: #0C0E14;
+    --keycloaked-sand-muted: #151821;
+    --keycloaked-sand-border: rgba(255, 255, 255, 0.11);
+    --keycloaked-black: #F8FAFC;
+    --keycloaked-charcoal: #F1F5F9;
+    --keycloaked-slate: #E2E8F0;
+    --keycloaked-muted: #94A3B8;
+    --keycloaked-subtle: #64748B;
+    --keycloaked-white: #151821;
+
+    /* Status Colors */
+    --keycloaked-success: #34D399;
+    --keycloaked-success-bg: rgba(52, 211, 153, 0.15);
+    --keycloaked-error: #F87171;
+    --keycloaked-error-bg: rgba(248, 113, 113, 0.15);
+    --keycloaked-warning: #FB923C;
+    --keycloaked-warning-bg: rgba(251, 146, 60, 0.15);
+    --keycloaked-info: #60A5FA;
+    --keycloaked-info-bg: rgba(96, 165, 250, 0.15);
+
+    /* Shadows */
+    --shadow-card: 0 4px 24px -4px rgba(0, 0, 0, 0.5), 0 2px 8px -2px rgba(0, 0, 0, 0.3);
+    --shadow-card-hover: 0 12px 32px -8px rgba(0, 0, 0, 0.65), 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+    --shadow-elevated: 0 24px 48px -12px rgba(0, 0, 0, 0.7);
+
+    /* Atmospheric Background Glows */
+    --glow-coral: rgba(255, 143, 92, 0.16);
+    --glow-blue: rgba(59, 130, 246, 0.14);
+
+    color-scheme: dark;
+  }
+}
+
+/* ==========================================================================
+   Keycloaked Design System - Explicit [data-theme="dark"]
+   ========================================================================== */
+[data-theme="dark"] {
+  --keycloaked-blue: #3B82F6;
+  --keycloaked-blue-dark: #2563EB;
+  --keycloaked-blue-light: rgba(59, 130, 246, 0.18);
+  --keycloaked-blue-glow: rgba(59, 130, 246, 0.35);
+
+  --keycloaked-coral: #FF8F5C;
+  --keycloaked-coral-dark: #F97316;
+  --keycloaked-coral-light: rgba(255, 143, 92, 0.18);
+  --keycloaked-coral-glow: rgba(255, 143, 92, 0.35);
+
+  --keycloaked-bg: #0C0E14;
+  --keycloaked-bg-surface: #151821;
+  --keycloaked-bg-muted: #1E2330;
+  --keycloaked-bg-glass: rgba(21, 24, 33, 0.85);
+
+  --keycloaked-border: rgba(255, 255, 255, 0.11);
+  --keycloaked-border-subtle: rgba(255, 255, 255, 0.07);
+
+  --keycloaked-text: #F8FAFC;
+  --keycloaked-text-muted: #94A3B8;
+  --keycloaked-text-subtle: #64748B;
+  --keycloaked-text-inverse: #0C0E14;
+
+  --keycloaked-sand: #0C0E14;
+  --keycloaked-sand-muted: #151821;
+  --keycloaked-sand-border: rgba(255, 255, 255, 0.11);
+  --keycloaked-black: #F8FAFC;
+  --keycloaked-charcoal: #F1F5F9;
+  --keycloaked-slate: #E2E8F0;
+  --keycloaked-muted: #94A3B8;
+  --keycloaked-subtle: #64748B;
+  --keycloaked-white: #151821;
+
+  --keycloaked-success: #34D399;
+  --keycloaked-success-bg: rgba(52, 211, 153, 0.15);
+  --keycloaked-error: #F87171;
+  --keycloaked-error-bg: rgba(248, 113, 113, 0.15);
+  --keycloaked-warning: #FB923C;
+  --keycloaked-warning-bg: rgba(251, 146, 60, 0.15);
+  --keycloaked-info: #60A5FA;
+  --keycloaked-info-bg: rgba(96, 165, 250, 0.15);
+
+  --shadow-card: 0 4px 24px -4px rgba(0, 0, 0, 0.5), 0 2px 8px -2px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 12px 32px -8px rgba(0, 0, 0, 0.65), 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 24px 48px -12px rgba(0, 0, 0, 0.7);
+
+  --glow-coral: rgba(255, 143, 92, 0.16);
+  --glow-blue: rgba(59, 130, 246, 0.14);
+
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   Keycloaked Design System - Explicit [data-theme="light"]
+   ========================================================================== */
+[data-theme="light"] {
+  --keycloaked-blue: #225EE2;
+  --keycloaked-blue-dark: #1B53CF;
+  --keycloaked-blue-light: #EEF2FD;
+  --keycloaked-blue-glow: rgba(34, 94, 226, 0.25);
+
+  --keycloaked-coral: #FF8048;
+  --keycloaked-coral-dark: #F06E32;
+  --keycloaked-coral-light: #FFF0E8;
+  --keycloaked-coral-glow: rgba(255, 128, 72, 0.25);
+
+  --keycloaked-bg: #FCFAF6;
+  --keycloaked-bg-surface: #FFFFFF;
+  --keycloaked-bg-muted: #F7F2E9;
+  --keycloaked-bg-glass: rgba(255, 255, 255, 0.85);
+
+  --keycloaked-border: #E2E8F0;
+  --keycloaked-border-subtle: #EAE7DD;
+
+  --keycloaked-text: #191420;
+  --keycloaked-text-muted: #626773;
+  --keycloaked-text-subtle: #9499A5;
+  --keycloaked-text-inverse: #FFFFFF;
+
+  --keycloaked-sand: #FCFAF6;
+  --keycloaked-sand-muted: #F7F2E9;
+  --keycloaked-sand-border: #EAE7DD;
+  --keycloaked-black: #191420;
+  --keycloaked-charcoal: #1F1E30;
+  --keycloaked-slate: #29323F;
+  --keycloaked-muted: #626773;
+  --keycloaked-subtle: #9499A5;
+  --keycloaked-white: #FFFFFF;
+
+  --keycloaked-success: #2EB84F;
+  --keycloaked-success-bg: #EAF8ED;
+  --keycloaked-error: #E03027;
+  --keycloaked-error-bg: #FFF0EF;
+  --keycloaked-warning: #E56F43;
+  --keycloaked-warning-bg: #FFF5F0;
+  --keycloaked-info: #225EE2;
+  --keycloaked-info-bg: #EEF2FD;
+
+  --shadow-card: 0 4px 24px -4px rgba(25, 20, 32, 0.07), 0 2px 8px -2px rgba(25, 20, 32, 0.04);
+  --shadow-card-hover: 0 12px 32px -8px rgba(25, 20, 32, 0.12), 0 4px 12px -2px rgba(25, 20, 32, 0.06);
+  --shadow-elevated: 0 24px 48px -12px rgba(25, 20, 32, 0.12);
+
+  --glow-coral: rgba(255, 128, 72, 0.12);
+  --glow-blue: rgba(34, 94, 226, 0.10);
+
+  color-scheme: light;
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@keycloaked/notifier",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mock SMTP and SMS notification backend service for Keycloak",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  }
+}

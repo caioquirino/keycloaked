@@ -1,0 +1,43 @@
+version: "1.0"
+name: "keycloaked-usl-workflow"
+description: "Uber-style Unified Signup and Login (USL) workflow configuration"
+
+# Authentication Factor Toggles & Policies
+factors:
+  mode: "passwordless_first"      # "passwordless_first" | "passwordless_only" | "hybrid"
+  webauthn:
+    enabled: true
+    prefer_passwordless: true     # Offer passkey before OTP/password if user has passkey
+    conditional_ui: true          # Passkey autofill directly inside the identifier field
+  otp:
+    enabled: true
+    direct_passwordless: true     # Allow instant login via SMS/Email OTP without password
+    channels:
+      default: "auto"             # 'auto', 'sms', 'email'
+      available:
+        - "sms"
+        - "whatsapp"
+        - "email"
+        - "totp"
+  password:
+    enabled: false                # Retain as fallback ("Try another way")
+    allow_fallback: false         # Set to false to disable password entry entirely
+  social:
+    enabled: false                # Identity federation
+    providers: []
+
+# Flow Engine Settings
+flow:
+  mode: "identifier_first"        # Single input field: email or phone or username
+  auto_detect_signup_vs_signin: true
+  allow_registration: true
+  remember_me: true
+
+# Account Linking & Collision Resolution
+account_linking:
+  # When unrecognized factor is presented: ask if user has an account to link
+  prompt_on_new_credential: true
+  # When sign-up contact info collides with existing user: ask to sign in & link
+  prompt_on_signup_collision: true
+  # Verification strategy required before linking new factor to original account
+  verification_strategy: "strong_verification" # "password" | "email_otp" | "totp"

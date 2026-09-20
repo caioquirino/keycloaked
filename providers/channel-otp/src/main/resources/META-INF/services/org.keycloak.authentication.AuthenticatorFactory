@@ -1,0 +1,4 @@
+com.keycloaked.keycloak.authenticator.otp.ChannelOtpAuthenticatorFactory
+com.keycloaked.keycloak.authenticator.otp.SmsOtpAuthenticatorFactory
+com.keycloaked.keycloak.authenticator.otp.EmailOtpAuthenticatorFactory
+com.keycloaked.keycloak.authenticator.otp.WhatsAppOtpAuthenticatorFactory
