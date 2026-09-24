@@ -140,6 +140,7 @@ resource "keycloak_authentication_bindings" "browser_flow_binding" {
     keycloak_authentication_execution.email_otp,
     keycloak_authentication_execution.password_form,
     keycloak_authentication_execution.sudo_dg_password,
+    keycloak_authentication_execution.usl_registration_terms,
   ]
 }
 

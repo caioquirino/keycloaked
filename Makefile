@@ -53,6 +53,7 @@ help:
 	@echo "  make help            Display this help message"
 
 up:
+	mkdir -p theme/dist_keycloak
 	docker compose up -d
 	@echo ""
 	@echo "Services started!"
@@ -81,23 +82,29 @@ clean:
 app-install:
 	yarn --cwd app install
 
-app-dev:
+app/node_modules:
+	yarn --cwd app install
+
+app-dev: app/node_modules
 	yarn --cwd app dev --host
 
-app-build:
+app-build: app/node_modules
 	yarn --cwd app build
 
 # Theme
 theme-install:
 	yarn --cwd theme install
 
-theme-dev:
+theme/node_modules:
+	yarn --cwd theme install
+
+theme-dev: theme/node_modules
 	yarn --cwd theme dev
 
-theme-storybook:
+theme-storybook: theme/node_modules
 	yarn --cwd theme storybook
 
-theme-build:
+theme-build: theme/node_modules
 	yarn --cwd theme build-keycloak-theme
 
 theme-deploy: theme-build

@@ -121,7 +121,7 @@ Ensure you have the following installed on your host system:
 
 ## Quick Start Guide
 
-Follow these 4 simple steps to get the complete stack up and running:
+Follow these 5 simple steps to get the complete stack up and running:
 
 ### Step 1: Start Container Services
 Launches PostgreSQL 16, Keycloak 26, and the Notifier proxy in the background:
@@ -130,13 +130,21 @@ make up
 ```
 > Keycloak takes ~15–20 seconds to boot on first start. Verify status with `make status`.
 
-### Step 2: Provision Realm with Terraform
-Initializes and applies Terraform, creating the `playground` realm, clients, roles, USL browser flow, and the test account:
+### Step 2: Build & Deploy the Theme and Custom SPI
+`theme/dist_keycloak` is mounted read-only into the Keycloak container as its providers directory, but it's empty until built. Build and deploy the Keycloakify theme and the Channel OTP SPI, restarting Keycloak so both are loaded:
+```bash
+make theme-deploy
+make provider-deploy
+```
+> Required before provisioning the realm — Step 3 wires a browser flow to the `ChannelOtpAuthenticator`, which Keycloak must already have loaded.
+
+### Step 3: Provision Realm with Terraform
+Initializes and applies Terraform, creating the `playground` realm, clients, roles, USL browser and registration flows, and the test account:
 ```bash
 make realm-provision
 ```
 
-### Step 3: Start the Client Application
+### Step 4: Start the Client Application
 Installs dependencies (if not already installed) and starts the Vite development server:
 ```bash
 make app-dev
@@ -146,7 +154,7 @@ Open **[http://localhost:5173](http://localhost:5173)** in your browser:
 - Enter `testuser@example.com` or `+31 6 0000 0000`.
 - Verify using the 6-digit OTP captured live in the dashboard at **[http://localhost:3001](http://localhost:3001)**.
 
-### Step 4: (Optional) Explore Theme in Storybook
+### Step 5: (Optional) Explore Theme in Storybook
 Inspect and develop login, OTP, registration, and error pages in isolation with mock user sessions:
 ```bash
 make theme-storybook
